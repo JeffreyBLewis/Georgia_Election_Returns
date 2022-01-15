@@ -17,7 +17,7 @@ library(targets)
 
 This repository contains code to download and parse precinct-level election returns from the state of Georgia.  The code is written in [`R`](https://www.r-project.org/) and uses the [`targets`](https://books.ropensci.org/targets/) pipeline toolkit to manage the production of the data.
 
-The all of parsed and de-normalized are contained in the file `csv/GA_precinct_level_election_returns.csv.gz` in this repository.
+The all of parsed and de-normalized data are contained in the file `csv/GA_precinct_level_election_returns.csv.gz` in this repository.
 
 The following two commands can be used to re-ingest and re-parse the original source XML files found on the Georgia Secretary of State's [webpages](https://results.enr.clarityelections.com/GA/).
 

@@ -13,7 +13,7 @@ election returns from the state of Georgia. The code is written in
 [`targets`](https://books.ropensci.org/targets/) pipeline toolkit to
 manage the production of the data.
 
-The all of parsed and de-normalized are contained in the file
+The all of parsed and de-normalized data are contained in the file
 `csv/GA_precinct_level_election_returns.csv.gz` in this repository.
 
 The following two commands can be used to re-ingest and re-parse the

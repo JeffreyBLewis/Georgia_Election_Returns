@@ -37,3 +37,9 @@ vignettes/*.pdf
 
 # R Environment Variables
 .Renviron
+
+# downloaded XML files
+/precinct_xml/*
+
+# Targets objects
+/_targets/*

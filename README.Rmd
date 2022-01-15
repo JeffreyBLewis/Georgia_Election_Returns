@@ -11,7 +11,7 @@ library(tidyverse)
 library(targets)
 ```
 
-[This is a preliminary work a progress. Use at your own risk.]
+[This is a preliminary work in progress. Use at your own risk.]
 
 ## Overview
 

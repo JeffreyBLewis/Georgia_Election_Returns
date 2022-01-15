@@ -3,7 +3,7 @@ Georgia Precinct-level election returns
 Jeff Lewis
 14 January 2022
 
-\[This is a preliminary work a progress. Use at your own risk.\]
+\[This is a preliminary work in progress. Use at your own risk.\]
 
 ## Overview
 

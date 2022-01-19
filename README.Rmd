@@ -1,7 +1,7 @@
 ---
-title: "Georgia Precinct-level election returns"
+title: "South Carolina precinct-level election returns"
 author: "Jeff Lewis"
-date: "14 January 2022"
+date: "18 January 2022"
 output: github_document
 ---
 
@@ -17,9 +17,9 @@ library(targets)
 
 This repository contains code to download and parse precinct-level election returns from the state of Georgia.  The code is written in [`R`](https://www.r-project.org/) and uses the [`targets`](https://books.ropensci.org/targets/) pipeline toolkit to manage the production of the data.
 
-The all of parsed and de-normalized data are contained in the file `csv/GA_precinct_level_election_returns.csv.gz` in this repository.
+The all of parsed and de-normalized data are contained in the file `csv/SC_precinct_level_election_returns.csv.gz` in this repository.
 
-The following two commands can be used to re-ingest and re-parse the original source XML files found on the Georgia Secretary of State's [webpages](https://results.enr.clarityelections.com/GA/).
+The following two commands can be used to re-ingest and re-parse the original source XML files found on the Sourch Carolina Secretary of State's [webpages](https://www.scvotes.gov/election-results).
 
 ```{r eval=FALSE}
 source("_targets.R")

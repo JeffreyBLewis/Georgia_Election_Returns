@@ -16,35 +16,24 @@ parse_xml <- function(xmlzip) {
   election_date <- xml_find_first(res, "/ElectionResult/ElectionDate") %>% xml_text()
   election_name <- xml_find_first(res, "//ElectionResult/ElectionName") %>% xml_text()
   county <- xml_find_first(res, "//Region") %>% xml_text()
-  turnout_block <- xml_find_all(res, "/ElectionResult/VoterTurnout/Precincts/Precinct")
-  if (length(turnout_block)==0) {
-     turnout_by_precinct <- data.frame(precinct = character(0))
-  }
-  else {
-    turnout_by_precinct <- turnout_block %>%
+  turnout_by_precinct <- xml_find_all(res, "/ElectionResult/VoterTurnout/Precincts/Precinct") %>%
                             map_df(~data.frame(precinct = xml_attr(.x, "name"),
                                                ballots_cast_all_ways = as.integer(xml_attr(.x, "ballotsCast")),
                                                total_voters = as.integer(xml_attr(.x, "totalVoters")),
                                                precent_reporting = as.integer(xml_attr(.x, "percentReporting")))) %>%
                             rename_with(.cols = -precinct, function(nm) paste0("VTOR_", nm))
-  }
   votes <- xml_find_all(res, "Contest") %>%
              map_df(function(contest) {
                 contest_name <- xml_attr(contest, "text")
-                votetype_block <- xml_find_all(contest, "./VoteType/Precinct")
-                if (length(votetype_block) == 0) {
-                  voteType = data.frame(precinct = character(0))
-                }
-                else {
-                  voteType <-  votetype_block %>%
+                voteType <- xml_find_all(contest, "./VoteType/Precinct") %>%
                      map_df(function(precinct) {
                         data.frame(precinct = xml_attr(precinct, "name"),
                                    value = as.integer(xml_attr(precinct, "votes")),
                                    label = xml_attr(xml_parent(precinct), "name"))
                      }) %>%
                      pivot_wider(names_from = label, values_from = value) %>%
-                     rename_with(.cols = -precinct, function(nm) paste0("VTR_", nm, "_all_ways")) 
-                }
+                     rename_with(.cols = -precinct, function(nm) paste0("VTR_", nm, "_all_ways"))
+                
                 xml_find_all(contest, "./Choice/VoteType/Precinct") %>%
                   map_df(function(choice) {
                     data.frame(county = county,

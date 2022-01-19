@@ -5,7 +5,7 @@ get_precinct_xml <- function(participating_counties) {
     pwalk(function(...) {
       current <- tibble(...)
       if (current$county != "-1") {
-        url <- sprintf("https://www.enr-scvotes.org/SC/%s/%i/%i/reports/detailxml.zip",                   
+        url <- sprintf("https://results.enr.clarityelections.com//GA/%s/%i/%i/reports/detailxml.zip",                   
                        current$county,
                        as.integer(current$eid), 
                        as.integer(current$vid))

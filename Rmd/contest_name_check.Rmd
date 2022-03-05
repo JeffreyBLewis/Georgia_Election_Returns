@@ -1,0 +1,67 @@
+---
+title: "Checking contest names across counties and contest_key values"
+author: "Jeff Lewis"
+date: "3/5/2022"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(targets)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Overview
+
+Check to see if contest names are unique within county.  That is, if we see the contest name "city council" it refers to only one specific electoral contest within the county.  Also, look to see if the `contest_key` variable helps to disambiguate contests if the `contest` field values are not indeed unique.
+
+```{r}
+setwd("..")
+tar_load(precinct_level_data)
+```
+
+```{r}
+contest_dat <- precinct_level_data %>%
+  distinct(date, contest_key, county, contest, candidate)  %>%
+  group_by(date, contest_key, county, contest) %>%
+  summarize(cands = paste(candidate, collapse="|"),
+            ncands = n(), 
+            .groups="drop")  
+```
+
+Most contest names are associated with three of fewer candidates suggesting that contest names identify unique contests within counties.
+  
+Here are the contests that have a large number of candidates:
+```{r}
+contest_dat %>% 
+  filter(ncands > 4) %>%
+  group_by(date, contest) %>%
+  summarize(ncands = max(ncands),
+            counties = n()) %>%
+  knitr::kable()
+``` 
+
+Nothing here immediately jumps out as suggesting that multiple contests in a county are have the same `contest` field value.
+
+However, one thing to note is that same contest may have different names *across* counties.
+
+
+Further, there is only one case in which the same contest name is associated with two `contest_key` values in the same county:
+
+```{r}
+contest_dat%>%
+  group_by(date, county, contest) %>%
+  summarize(n = n(), .groups="drop") %>% 
+  filter(n>1) %>%
+  knitr::kable()
+```
+I expect this is an error. Here is that instance:
+
+
+```{r}
+precinct_level_data %>%
+  filter(date=="6/9/2020", county=="Douglas", contest=="State Court Judge") %>%
+  count(contest, contest_key, candidate) %>%
+  knitr::kable()
+```
+So, the `contest_key` isn't helping to resolve contests beyond the information available in the contest name.

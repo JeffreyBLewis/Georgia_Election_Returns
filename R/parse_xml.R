@@ -25,6 +25,7 @@ parse_xml <- function(xmlzip) {
   votes <- xml_find_all(res, "Contest") %>%
              map_df(function(contest) {
                 contest_name <- xml_attr(contest, "text")
+                contest_key <- xml_attr(contest, "key")
                 voteType <- xml_find_all(contest, "./VoteType/Precinct") %>%
                      map_df(function(precinct) {
                         data.frame(precinct = xml_attr(precinct, "name"),
@@ -41,6 +42,7 @@ parse_xml <- function(xmlzip) {
                                date = election_date,
                                timestamp = timestamp,
                                contest = contest_name,    
+                               contest_key = contest_key,
                                is_question = xml_attr(contest, "isQuestion") == "true",
                                candidate = xml_attr(xml_grandparent(choice), "text"),
                                precinct = xml_attr(choice, "name"),

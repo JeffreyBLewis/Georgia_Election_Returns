@@ -23,9 +23,27 @@ contest_dat <- precinct_level_data %>%
   summarize(cands = paste(candidate, collapse="|"),
             ncands = n(), 
             .groups="drop")  
+
+contest_dat %>%
+  count(ncands) %>%
+  knitr::kable()
 ```
 
-Most contest names are associated with three of fewer candidates
+| ncands |    n |
+|-------:|-----:|
+|      1 | 6537 |
+|      2 | 5792 |
+|      3 |  937 |
+|      4 |   74 |
+|      5 |   34 |
+|      6 |   22 |
+|      7 |  167 |
+|      8 |    2 |
+|      9 |   34 |
+|     12 |  318 |
+|     20 |  159 |
+
+Most contest names are associated with three or fewer candidates
 suggesting that contest names identify unique contests within counties.
 
 Here are the contests that have a large number of candidates:
@@ -99,7 +117,7 @@ contest_dat %>%
 | 6/9/2020  | Superior Court - Stone Mountain - Seeliger                                                        |      5 |        1 |
 
 Nothing here immediately jumps out as suggesting that multiple contests
-in a county are have the same `contest` field value.
+in a county have the same `contest` field value.
 
 However, one thing to note is that same contest may have different names
 *across* counties.
